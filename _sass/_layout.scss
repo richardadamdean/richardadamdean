@@ -1,0 +1,90 @@
+
+$circle-size: 15px;
+
+@mixin branch-circle($size, $circle-initial-offset:0){
+  content: "";
+  position: absolute;
+
+  /* -1 for borders */
+  left: $circle-initial-offset - $size/2 ;
+  top: 0;
+
+  background: white;
+  /*background-image: asset-url('/assets/icons/50x50/rounds.png');*/
+
+  height: $size;
+  width: $size;
+  line-height: $size;
+  border-radius: $size;
+  border: 1px solid $blue;
+  text-align: center;
+  font-weight: bold;
+  transition: all .3s ease-out;
+}
+
+
+$job-margin: 30px;
+
+.left-content{
+
+  .employment-history{
+    .jobs{
+
+      border-left: 1px solid $black-color;
+
+      .job{
+
+        margin: $job-margin;
+
+        span{
+          display: block;
+        }
+      }
+
+      .nested-jobs{
+        margin-left: none;
+        border-left: 1px solid $black-color;
+
+        .job{
+          position: relative;
+          margin-left: $job-margin;
+
+          &:last-child{
+            border: none;
+          }
+
+          &:before{
+            @include branch-circle($circle-size, -$job-margin);
+          }
+        }
+      }
+
+      position: relative;
+
+      &:before{
+        @include branch-circle($circle-size);
+      }
+
+    }
+
+
+
+  }
+
+}
+
+.right-content{
+  background-color: $grey-color;
+}
+
+
+h3{
+  color: $red-color;
+  text-transform: capitalize;
+  font-weight: normal;
+}
+
+ul{
+  list-style: none;
+  padding-left: 0;
+}
