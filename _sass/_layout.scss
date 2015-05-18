@@ -1,12 +1,15 @@
 
 $circle-size: 15px;
+$jobs-gutter-vertical: 40px;
+$nested-job-gutter: 30px;
+$border-width: 1px;
 
-@mixin branch-circle($size, $circle-initial-offset:0){
+@mixin branch-circle($size){
   content: "";
   position: absolute;
 
   /* -1 for borders */
-  left: $circle-initial-offset - $size/2 ;
+  left: 0 - $size/2 - 1;
   top: 0;
 
   background: white;
@@ -16,25 +19,49 @@ $circle-size: 15px;
   width: $size;
   line-height: $size;
   border-radius: $size;
-  border: 1px solid $blue;
+  border: $border-width solid $blue;
   text-align: center;
   font-weight: bold;
-  transition: all .3s ease-out;
+  /*transition: all .3s ease-out;*/
 }
 
+@mixin branch-back(){
+  position: absolute;
+  content: "";
+  border: none;
+  border-top: $border-width solid $black-color;
 
-$job-margin: 30px;
+  $width: ($jobs-gutter-vertical + $nested-job-gutter) - $circle-size/2 ;
+
+  /* +1 for borders */
+  left: -($width + $border-width + $circle-size/2);
+  top: $circle-size/2 - $border-width;
+
+  height: $border-width;
+  width: $width;
+  /*transform: rotate(45deg);*/
+}
+
 
 .left-content{
 
   .employment-history{
+
+    margin-top: 20px;
+
     .jobs{
 
-      border-left: 1px solid $black-color;
+      border-left: $border-width solid $black-color;
 
       .job{
 
-        margin: $job-margin;
+        position: relative;
+        margin: 0;
+        padding: 0px $jobs-gutter-vertical 20px $jobs-gutter-vertical;
+
+        &:before{
+          @include branch-circle($circle-size);
+        }
 
         span{
           display: block;
@@ -42,27 +69,32 @@ $job-margin: 30px;
       }
 
       .nested-jobs{
-        margin-left: none;
-        border-left: 1px solid $black-color;
+        border-left: none;
+        margin: $nested-job-gutter;
 
         .job{
           position: relative;
-          margin-left: $job-margin;
+          border-left: $border-width solid $black-color;
+          margin: 0;
+          padding: 0 20px 50px 20px;
+
+          &:first-child:after{
+            @include branch-back();
+          }
+
+          &:last-child:after{
+            @include branch-back();
+          }
 
           &:last-child{
             border: none;
+            padding-bottom: 0;
           }
 
           &:before{
-            @include branch-circle($circle-size, -$job-margin);
+            @include branch-circle($circle-size);
           }
         }
-      }
-
-      position: relative;
-
-      &:before{
-        @include branch-circle($circle-size);
       }
 
     }
