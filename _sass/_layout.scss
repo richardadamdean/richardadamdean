@@ -9,7 +9,7 @@ $border-width: 1px;
   position: absolute;
 
   /* -1 for borders */
-  left: 0 - $size/2 - 1;
+  left: 0 - $size/2 - $border-width;
   top: 0;
 
   background: white;
@@ -25,7 +25,7 @@ $border-width: 1px;
   /*transition: all .3s ease-out;*/
 }
 
-@mixin branch-back(){
+@mixin branch-back-in(){
   position: absolute;
   content: "";
   border: none;
@@ -33,7 +33,6 @@ $border-width: 1px;
 
   $width: ($jobs-gutter-vertical + $nested-job-gutter) - $circle-size/2 ;
 
-  /* +1 for borders */
   left: -($width + $border-width + $circle-size/2);
   top: $circle-size/2 - $border-width;
 
@@ -79,11 +78,11 @@ $border-width: 1px;
           padding: 0 20px 50px 20px;
 
           &:first-child:after{
-            @include branch-back();
+            @include branch-back-in();
           }
 
           &:last-child:after{
-            @include branch-back();
+            @include branch-back-in();
           }
 
           &:last-child{
@@ -98,9 +97,6 @@ $border-width: 1px;
       }
 
     }
-
-
-
   }
 
 }
